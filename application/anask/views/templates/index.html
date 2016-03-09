@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<{include "public/top.html"}>
+<head>
+    <{include "public/meta.html"}>
+    <frameset rows="40,*,40" framespacing="0" border="0">
+        <frame src="<{base_url('header')}>" id="header-frame" name="header-frame" frameborder="no" scrolling="no">
+        <frameset cols="228, 5, *" framespacing="0" border="0" id="frame-body">
+            <frame src="<{base_url('menu')}>" id="menu-frame" name="menu-frame" frameborder="no" scrolling="yes">
+            <frame src="" id="drag-frame" name="drag-frame" frameborder="no" scrolling="no">
+            <frame src="<{base_url('main')}>" id="main-frame" name="main-frame" frameborder="no" scrolling="yes">
+        </frameset>
+        <frame src="<{base_url('footer')}>" id="footer-frame" name="footer-frame" frameborder="no" scrolling="no">
+    </frameset>
+    <frameset rows="0, 0" framespacing="0" border="0">
+    </frameset>
+</head>
+<body>
+</body>
+</html>

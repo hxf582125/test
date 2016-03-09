@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<{include file="public/top.html"}>
+<!-- BEGIN HEAD -->
+<head>
+
+<{include file="public/meta.html"}>
+<!-- BEGIN GLOBAL MANDATORY STYLES -->
+<{include file="public/CSS.html"}>
+<!-- END GLOBAL MANDATORY STYLES -->
+		<link rel="shortcut icon" href="/static/image/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="/static/css/datetimepicker.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/uploadify.css"/>
+    <style type="text/css">
+    .alert_page_success{
+    	background-color:#dff0d8;
+    	color:#468847;
+    }
+
+    .alert_page_error{
+    	background-color:#f2dede;
+    	color:#b94a48;
+    }
+    </style>
+</head>
+	<!-- BEGIN CONTAINER -->
+<body class="page-header-fixed">
+
+	<div class="row-fluid">
+
+		<!-- BEGIN PAGE -->  
+
+		<div class="page-content">
+
+			<!-- BEGIN PAGE CONTAINER-->
+
+			<div class="container-fluid">
+
+				<!-- BEGIN PAGE HEADER-->   
+
+				<div class="row-fluid">
+
+					<div class="span12">  
+
+						<h3 class="page-title">
+
+							编辑新闻
+
+							 <small></small>
+
+						</h3>
+
+						<ul class="breadcrumb">
+
+							<li>
+
+								<i class="icon-home"></i>
+
+								<a href="<{base_url('/main')}>">首页</a> 
+
+								<span class="icon-angle-right"></span>
+
+							</li>
+
+							<li>
+
+								<a href="<{base_url('/admin')}>">新闻列表</a>
+
+								<span class="icon-angle-right"></span>
+
+							</li>
+
+							<li><a href="#">当前</a></li>
+
+						</ul>
+
+					</div>
+
+				</div>
+
+				<!-- END PAGE HEADER-->
+
+				<!-- BEGIN PAGE CONTENT-->
+
+				<div class="row-fluid">
+
+					<div class="span12">
+
+						<!-- BEGIN SAMPLE FORM PORTLET-->   
+
+						<div class="portlet box blue">
+
+							<div class="portlet-title">
+
+								<div class="caption"><i class="icon-reorder"></i>编辑新闻</div>
+
+							</div>
+
+							<div class="portlet-body form">
+
+								<!-- BEGIN FORM-->
+
+								<form action="" id="submitForm" class="form-horizontal">
+
+								<!-- alert msg -->
+									<div class="alert alert-error hide">
+
+									    <button class="close" data-dismiss="alert"></button>
+
+									    	存在一些错误，请检查！
+
+									</div>
+
+									<div class="alert alert-success hide">
+									    <button class="close" data-dismiss="alert"></button>
+
+									    信息提交成功！
+									</div>
+
+									<div class="alert alert_page_success hide" ></div>
+
+									<div class="alert alert_page_error hide"></div>
+
+								<!-- alert msg -->
+
+									<div class="control-group">
+
+										<label class="control-label">标题</label>
+
+										<div class="controls">
+
+											<input type="text" id="title" name="title" class="span8 m-wrap" value="<{$news['title']}>" />
+
+											<span class="help-inline"></span>
+
+										</div>
+
+									</div>
+
+									<div class="control-group">
+
+										<label class="control-label">URL</label>
+
+										<div class="controls">
+
+											<input type="text" id="url" name="url" class="span8 m-wrap" value="<{$news['url']}>" />
+
+											<span class="help-inline"></span>
+
+										</div>
+
+									</div>
+
+									<div class="control-group">
+
+										<label class="control-label">内容</label>
+
+										<div class="controls">
+
+											<textarea name="content" id="content" class="span8 m-wrap" style="height:400px;visibility:hidden;"><{$news['content']}></textarea>
+
+
+											<span class="help-inline"></span>
+
+										</div>
+
+									</div>
+
+									<div class="control-group">
+
+										<label class="control-label">新闻类型</label>
+
+										<div class="controls">
+
+											<select class="span8 m-wrap" name="type" id="type">
+
+												<option value="">Select</option>
+
+												<{foreach $type as $val}>
+
+												<option value="<{$val['type_id']}>" <{if $val['type_id']==$news['type']}>selected<{/if}>><{$val['name']}></option>
+
+												<{/foreach}>
+
+											</select>
+
+										</div>
+
+									</div>
+
+									<div class="control-group">
+
+										<label class="control-label">发布时间</label>
+
+										<div class="controls">
+
+											<div class="input-prepend date pubTime">
+
+												<span class="add-on"><i class="icon-calendar"></i></span><input readonly type="text" class="m-wrap date-range" id="pubTime" name="pubTime" value="<{date('Y-m-d',$news['pubTime'])}>" />
+
+											</div>
+
+												<input type="text" class="m-wrap" id="hours" name="hours" placeholder="H:i" value="<{date('H:i:s',$news['pubTime'])}>" />
+
+										</div>
+
+									</div>
+
+									<div class="control-group">
+							        <label class="control-label">缩略图</label>
+							        <div class="controls">
+							            <ul id="img-list" class="pic-list">
+							                <li class="p-item first">
+							                    <div class="p-img"><{if $news['img']}><img imgurl="<{$news['img']}>" src="http://www.gamedo.com.cn<{$news['img']}>"><{/if}></div>
+							                    <div class="ctrl-bar">
+							                        <a class="to-l"></a>
+							                        <a class="to-r"></a>
+							                        <a class="del"></a>
+							                    </div>
+							                </li>
+							            </ul>
+							            <div id="upload-form">
+							                <div id="queue"></div>
+							                <input id="img_upload" name="img_upload" type="file" multiple="true" class="upload_class">
+							            </div>
+							        </div>
+							    </div>
+
+									<div class="control-group">
+
+										<label class="control-label">是否置顶</label>
+
+										<div class="controls">
+
+											<label class="radio">
+
+											<div class="radio"><span class=""><input type="radio" name="isTop" value="1" <{if $news['is_top']==1}>checked<{/if}> /></span></div>
+
+											一级
+
+											</label>
+
+											<label class="radio">
+
+											<div class="radio"><span class=""><input type="radio" name="isTop" value="2" <{if $news['is_top']==2}>checked<{/if}> /></span></div>
+
+											二级
+
+											</label>   
+
+											<label class="radio">
+
+											<div class="radio"><span class=""><input type="radio" name="isTop" value="3" <{if $news['is_top']==3}>checked<{/if}> /></span></div>
+
+											三级
+
+											</label>
+
+											<label class="radio">
+
+											<div class="radio"><span class=""><input type="radio" name="isTop" value="4" <{if $news['is_top']==4}>checked<{/if}> /></span></div>
+
+											四级
+
+											</label> 
+
+											<label class="radio">
+
+											<div class="radio"><span class=""><input type="radio" name="isTop" value="0" <{if $news['is_top']==0}>checked<{/if}> /></span></div>
+
+											否
+
+											</label>   
+
+										</div>
+
+									</div>
+
+									<div class="control-group">
+
+										<label class="control-label">是否显示</label>
+
+										<div class="controls">
+
+											<label class="radio">
+
+											<div class="radio"><span class=""><input type="radio" name="isShow" value="1" <{if $news['is_show']==1}>checked<{/if}> /></span></div>
+
+											是
+
+											</label>
+
+											<label class="radio">
+
+											<div class="radio"><span class=""><input type="radio" name="isShow" value="0" <{if $news['is_show']==0}>checked<{/if}> /></span></div>
+
+											否
+
+											</label>   
+
+										</div>
+
+									</div>
+
+
+									<div class="form-actions  clearfix">
+
+										<input type="hidden" id="id" name="id" value="<{$news['id']}>" />
+
+										<a href="javascript:;" id="submit" name="submit" class="btn blue">提交 <i class="m-icon-swapright m-icon-white"></i></a>
+
+									</div>
+
+								</form>
+
+								<!-- END FORM-->       
+
+							</div>
+
+						</div>
+
+						<!-- END SAMPLE FORM PORTLET-->
+
+					</div>
+
+				</div>
+
+				<!-- END PAGE CONTENT-->         
+
+			</div>
+
+			<!-- END PAGE CONTAINER-->
+
+		</div>
+
+		<!-- END PAGE -->  
+
+	</div>
+
+	<!-- END CONTAINER -->
+
+	<{include 'public/JS.html'}>
+
+  <script src="/static/js/news/editNews.js" type="text/javascript"></script> 
+	<script src="/static/kindeditor/kindeditor-min.js" charset="utf-8" ></script>
+	<script src="/static/kindeditor/lang/zh_CN.js" charset="utf-8" ></script>
+<script type="text/javascript" src="/static/js/public/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript" src="/static/js/public/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script src="/static/js/public/jquery.uploadify.min.js" type="text/javascript"></script>
+	<script>
+			var editor;
+			KindEditor.ready(function(K) {
+				editor = K.create('textarea[name="content"]', {
+					allowFileManager : true
+				});
+			});
+	</script>
+	<script type="text/javascript">
+		jQuery(document).ready(function() {       
+
+		   App.init();
+		   editNews.init();
+        time(pubTime,$(".pubTime"));
+
+		});
+		function time(obj,$obj)
+    {
+        var obj = $obj.datetimepicker({
+            minView:"month",
+        　　format: "yyyy-mm-dd",
+        　　language: 'zh-CN', //汉化
+        　　autoclose:true //选择日期后自动关
+        });
+    }
+	</script>
+
+	<!-- END JAVASCRIPTS -->   
+
+</body>
+
+<!-- END BODY -->
+
+</html>

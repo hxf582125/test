@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<{include file="public/top.html"}>
+<!-- BEGIN HEAD -->
+<head>
+
+<{include file="public/meta.html"}>
+<!-- BEGIN GLOBAL MANDATORY STYLES -->
+<{include file="public/CSS.html"}>
+<!-- END GLOBAL MANDATORY STYLES -->
+<link rel="shortcut icon" href="/static/image/favicon.ico" />
+
+</head>
+<!-- END HEAD -->
+
+<!-- BEGIN BODY -->
+
+<body class="page-header-fixed">
+<!-- BEGIN SIDEBAR -->
+
+    <div class="page-sidebar">
+
+      <!-- BEGIN SIDEBAR MENU -->        
+
+      <ul class="page-sidebar-menu">
+
+        <li class="start start-menu active">
+
+          <a href="<{base_url('main')}>" target="main-frame">
+
+          <i class="icon-home"></i> 
+
+          <span class="title">首页</span>
+
+          <span class="arrow-selected selected"></span>
+
+          </a>
+
+        </li>
+
+        <li class="start-menu">
+
+          <a href="javascript:;">
+
+          <i class="icon-cogs"></i> 
+
+          <span class="title">新闻</span>
+
+          <span class="arrow-selected arrow"></span>
+
+          </a>
+
+          <ul class="sub-menu">
+
+            <li >
+
+              <a href="<{base_url('admin')}>" target="main-frame">
+
+              新闻列表</a>
+
+            </li>
+
+          </ul>
+
+        </li>
+
+      </ul>
+
+      <!-- END SIDEBAR MENU -->
+
+    </div>
+
+    <!-- END SIDEBAR -->
+    <!-- BEGIN FOOTER -->
+<{include file="public/JS.html"}>
+  <!-- END PAGE LEVEL SCRIPTS -->
+  <script>
+        jQuery(document).ready(function() {
+            App.init();
+
+            $('.sub-menu').find('a').click(function(){
+                var li = $(this).parent().parent().parent();
+                $('.start-menu').removeClass('active');//移除当前选中菜单
+                li.addClass('active');//为当前点击菜单的父菜单增加激活class
+                //console.log('@@@@',$('.start-menu').find('.arrow-selected').removeClass('selected'));
+                $('.start-menu').find('.arrow-selected').removeClass('selected').addClass('arrow').removeClass('open');
+                //console.log('2222',ul);
+                li.find('.arrow-selected').removeClass('arrow').addClass('selected');
+
+                $('.start').find('.arrow-selected').removeClass('arrow');
+            });
+
+            $('.start').find('a').click(function(){
+                $('.start-menu').find('.arrow-selected').removeClass('selected').addClass('arrow').removeClass('open');
+                $(this).find('.arrow-selected').addClass('selected').removeClass('arrow');
+                //console.log('@@@@',$(this).parent());
+                $('.start-menu').removeClass('active');//移除当前选中菜单
+                $(this).parent().addClass('active');
+                $('.sub-menu').hide();
+            });
+        });
+    </script>
+</body>
+</html>
