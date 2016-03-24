@@ -24,8 +24,7 @@ var addNews = function(){
                 rules: {
                     //account
                     title: {
-                        required: true,
-                        maxlength:30
+                        required: true
                     },
                     content: {
                         required: true
@@ -129,8 +128,7 @@ var addNews = function(){
                 })
                 //整理需要提交的数据
                 var title = $("#title").val();
-                var url = $("#url").val();
-                var content = editor.html();
+                var content = ue.getContent().replace(/&nbsp;*/g,' ').replace(/&gt;*/g,'>').replace(/&lt;*/g,'<');
                 var type = $("#type").val();
                 var pubTime = $("#pubTime").val();
                 var hours = $("#hours").val();
@@ -142,18 +140,17 @@ var addNews = function(){
                     alert('请输入新闻内容');
                     return;
                 }
-                
-                var requestData = [
-                    "title=",title,'&',
-                    "url=",url,'&',
-                    "content=",content,'&',
-                    "type=",type,'&',
-                    "pubTime=",pubTime,'&',
-                    "hours=",hours,'&',
-                    "isTop=",isTop,'&',
-                    "isShow=",isShow,'&',
-                    "img=",img.attr('imgurl')
-                ].join('');
+                //console.log(content);return false;
+                var requestData = {
+                    "title":title,
+                    "content":content,
+                    "type":type,
+                    "pubTime":pubTime,
+                    "hours":hours,
+                    "isTop":isTop,
+                    "isShow":isShow,
+                    "img":img.attr('imgurl')
+                };
                 //console.log(requestData);
                 success.hide();
                 error.hide();
@@ -212,7 +209,7 @@ function imgList($list,$file,url)
                 for (var i = 0; i < $list.find('li').length; i++) {
                     var $item = $list.find('li').eq(i);
                     if (!$item.find('.p-img').html()) {
-                        $item.find('.p-img').html('<img width="70" height="70" imgurl='+data.data.imgurl+' src="http://www.gamedo.com.cn' + data.data.imgurl + '">');
+                        $item.find('.p-img').html('<img width="70" height="70" imgurl='+data.data.imgurl+' src="/' + data.data.imgurl + '">');
 
                         break;
                     }
